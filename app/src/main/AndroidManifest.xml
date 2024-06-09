@@ -13,7 +13,12 @@
         android:theme="@style/Theme.Memo"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".activitys.EditActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"
+            />
+        <activity
+            android:name=".activitys.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

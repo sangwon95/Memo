@@ -41,6 +41,10 @@ class MemoAdapter(
         memoListEventListener.changedMemoListListener(memoList)
     }
 
+    fun add(memoEntity: MemoEntity) {
+        memoList.add(memoEntity)
+    }
+
     inner class MemoViewHolder(private var binding: MemoListItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(memo: MemoEntity, position: Int){
 //            if(position == 0){
