@@ -5,44 +5,56 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.toble.memo.adpter.MemoAdapter
 import com.toble.memo.databinding.ActivityMainBinding
-import com.toble.memo.model.MemoListEventListener
+import com.toble.memo.model.MemoItemClickListener
+import com.toble.memo.repository.MemoRepository
+import com.toble.memo.room.MemoDatabase
 import com.toble.memo.room.MemoEntity
 import com.toble.memo.utils.MemoListHelper
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class MainActivity : AppCompatActivity(), MemoListEventListener {
+class MainActivity : AppCompatActivity(), MemoItemClickListener {
 
     companion object {
-        const val TAG: String = "MainActivity - 로그"
+        const val TAG: String = "로그 - MainActivity:"
     }
 
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var memoAdapter: MemoAdapter
 
+    private lateinit var memoDB: MemoDatabase //Room Database
+
     private var memoList = mutableListOf<MemoEntity>()
+
 
     // 메모 추가 화면 호출
     private val addLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
-                val content = result.data?.getStringExtra("content")
-                Log.i(TAG, "RESULT_OK : $content")
+                result.data?.getStringExtra("content")?.let {
+                    Log.i(TAG, "RESULT_OK : $it")
+                    memoAdapter.add(MemoEntity(null, it, "2024-06-05", "2024-06-05"))
+                }
+            }
+        }
 
-                //memoList.add(MemoEntity(null,"title", content.toString(), "2024-06-05", "2024-06-05"))
-                //  val data: Intent? = result.data
-                //  val title = data?.getStringExtra("title")
-                //  val content = data?.getStringExtra("content")
-                //  val date = data?.getStringExtra("date")
-                //  val time = data?.getStringExtra("time")
-                //  memoList.add(MemoEntity(memoList.size + 1, title, content, date, time))
-                //  memoAdapter.notifyDataSetChanged()
-
-                memoAdapter.add(MemoEntity(null,"title", content.toString(), "2024-06-05", "2024-06-05"))
-                memoAdapter.notifyDataSetChanged()
+    // 메모 수정 화면 호출
+    private val editLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                result.data?.getStringExtra("content")?.let {
+                    Log.i(TAG, "RESULT_OK : $it")
+                    result.data?.getIntExtra("position", -1)?.let { position ->
+                        memoAdapter.edit(position, MemoEntity(null, it, "2024-06-05", "2024-06-05"))
+                    }
+                }
             }
         }
 
@@ -51,8 +63,20 @@ class MainActivity : AppCompatActivity(), MemoListEventListener {
         binding = ActivityMainBinding.inflate(layoutInflater).apply {
             setContentView(this.root)
         }
-        memoList.add(MemoEntity(null, "title1", "content1", "2024-06-05", "2024-06-05"))
-        initMemoAdapter()
+        initMemoDataBase()
+    }
+
+    private fun initMemoDataBase() {
+        memoDB = MemoDatabase.getInstance(this)!! //Room Database 초기화
+        MemoRepository.initialize(memoDB)
+
+        // Room DB에 저장된 모든 메모 가져오기
+        lifecycleScope.launch {
+            MemoRepository.getAll().let {
+                memoList.addAll(it)
+                initMemoAdapter(memoList)
+            }
+        }
     }
 
     override fun onResume() {
@@ -61,13 +85,14 @@ class MainActivity : AppCompatActivity(), MemoListEventListener {
         // 메모 추가 버튼 클릭
         binding.addImageView.setOnClickListener {
         Intent(this, EditActivity::class.java).apply {
+            this.putExtra("memoState", "ADD")
             addLauncher.launch(this)
         }
       }
     }
 
 
-    private fun initMemoAdapter() {
+    private fun initMemoAdapter(memoList: MutableList<MemoEntity>) {
         memoAdapter = MemoAdapter(memoList, this)
         binding.memoRecyclerView.adapter = memoAdapter
 
@@ -83,7 +108,14 @@ class MainActivity : AppCompatActivity(), MemoListEventListener {
     }
 
 
-    override fun changedMemoListListener(updatedList: MutableList<MemoEntity>) {
-        TODO("Not yet implemented")
+    override fun memoItemClickEvent(content: String, position: Int) {
+        Intent(this, EditActivity::class.java).apply {
+            Log.d(TAG, "memoItemClickEvent: ${memoList[position]}")
+
+            this.putExtra("memoState", "EDIT")
+            this.putExtra("content", content)
+            this.putExtra("position", position)
+            editLauncher.launch(this)
+        }
     }
 }

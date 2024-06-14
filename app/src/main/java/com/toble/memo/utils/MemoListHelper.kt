@@ -22,11 +22,6 @@ class MemoListHelper(
         val fromPosition = viewHolder.adapterPosition
         val toPosition = target.adapterPosition
 
-        // Exclude the first item from movement
-        if (fromPosition == 0 || toPosition == 0) {
-            return false
-        }
-
         favoriteAdapter.moveItem(fromPosition, toPosition)
 
         //Collections.swap(updatedList, fromPosition, toPosition)
@@ -52,7 +47,29 @@ class MemoListHelper(
         val itemView = viewHolder.itemView
 
         Log.d("TAG", actionState.toString())
+        Log.d("dX", dX.toString())
 
+        if(dX == 0.0.toFloat()) {
+            Log.d("dX true", dX.toString())
+
+            paint.color = Color.BLACK
+            c.drawRect(
+                itemView.right + dX,
+                itemView.top.toFloat(),
+                itemView.right.toFloat(),
+                itemView.bottom.toFloat(),
+                paint
+            )
+
+            // 삭제 버튼을 그립니다.
+            // 여기서는 간단하게 "Delete" 텍스트를 그렸습니다.
+            paint.color = Color.WHITE
+            paint.textSize = 0f
+            val text = ""
+            val x = itemView.right - 150f
+            val y = itemView.top + (itemView.height + paint.textSize) / 2
+            c.drawText(text, x, y, paint)
+        }
 
         if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
             // 스와이프 중일 때만 배경과 삭제 버튼을 그립니다.
@@ -70,16 +87,7 @@ class MemoListHelper(
             // 여기서는 간단하게 "Delete" 텍스트를 그렸습니다.
             paint.color = Color.WHITE
             paint.textSize = 40f
-            val text = "삭제"
-            val x = itemView.right - 150f
-            val y = itemView.top + (itemView.height + paint.textSize) / 2
-            c.drawText(text, x, y, paint)
-        } else {
-
-            itemView.translationX = 0f
-            paint.color = Color.BLACK
-            paint.textSize = 40f
-            val text = ""
+            val text = "삭제!"
             val x = itemView.right - 150f
             val y = itemView.top + (itemView.height + paint.textSize) / 2
             c.drawText(text, x, y, paint)

@@ -14,7 +14,7 @@ interface MemoDAO {
     fun insert(region: MemoEntity)
 
     @Query(value = "SELECT * FROM memo")
-    fun getAll() : List<MemoEntity>
+    fun getAll() : MutableList<MemoEntity>
 
     @Delete
     fun delete(region: MemoEntity)
