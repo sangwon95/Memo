@@ -10,6 +10,8 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
 import com.toble.memo.databinding.ActivityEditBinding
+import com.toble.memo.model.MemoData
+import com.toble.memo.room.MemoEntity
 import com.toble.memo.utils.KeyboardUtil
 
 
@@ -24,12 +26,11 @@ class EditActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityEditBinding
 
-    private var memoState: String = "ADD"
-    private var beforeContent: String = ""
-    private var position: Int = -1
+//    private var memoState: String = "ADD"
+//    private var beforeContent: String = ""
+//    private var position: Int = -1
 
-
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private lateinit var memoData: MemoData
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,19 +41,22 @@ class EditActivity : AppCompatActivity() {
 
         setupKeyboardVisibilityListener() // 키보드 상태 리스너 등록
 
-        intent.getStringExtra("memoState")?.let { it ->
-            memoState = it
-            if (memoState == "ADD") {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getParcelableExtra("memoData", MemoData::class.java)
+        } else {
+            @Suppress("DEPRECATION") // 사용되지 않는 정보
+            intent.getParcelableExtra("memoData") as? MemoData
+        }?.let { memoData ->
+            this.memoData = memoData
+
+            if (memoData.memoState == "ADD") {
                 binding.actionTextView.text = "완료"
             } else {
                 binding.actionTextView.text = "수정"
-
-                beforeContent = intent.getStringExtra("content")!!
-                position = intent.getIntExtra("position", -1)
-
-                binding.memoEditText.setText(beforeContent)
+                binding.memoEditText.setText(memoData.content)
             }
         }
+
         binding.memoEditText.requestFocus()
     }
 
@@ -81,12 +85,11 @@ class EditActivity : AppCompatActivity() {
     private fun processMemoAndFinish() {
         val memoText: String = binding.memoEditText.text.toString()
 
-        if (memoText.isEmpty()) {
-            setResultWithContent(null)
-        } else {
+        if (memoText.isNotEmpty()) {
             setResultWithContent(memoText)
+        } else {
+            finish()
         }
-        finish()
     }
 
 
@@ -94,26 +97,26 @@ class EditActivity : AppCompatActivity() {
      * 결과값을 메인 화면에 전달
      */
     private fun setResultWithContent(content: String?) {
-
-        if(memoState == "ADD"){
+        if(memoData.memoState == "ADD" ){
             val intent = Intent(this, MainActivity::class.java).apply {
-                putExtra("content", content)
+                putExtra("content", content!!)
             }
             setResult(RESULT_OK, intent)
 
         } else {
             val intent = Intent(this, MainActivity::class.java)
 
-            if(beforeContent == content){
+            if(memoData.content == content){
                 setResult(RESULT_CANCELED, intent)
             } else {
                 intent.apply {
-                    putExtra("content", content!!)
-                    putExtra("position", position)
+                    memoData.content = content!!
+                    putExtra("memoData", memoData)
                 }
                 setResult(RESULT_OK, intent)
             }
         }
+        finish()
     }
 
     /**
@@ -158,7 +161,4 @@ class EditActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         return true
     }
-
-
-
 }

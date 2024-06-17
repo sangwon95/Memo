@@ -24,4 +24,8 @@ interface MemoDAO {
 
     @Update
     fun update(memo: MemoEntity)
+
+
+    @Query("UPDATE memo SET content = :content, updateAt = :updateAt WHERE id = :id")
+    fun updateEdit(id: Long, content: String, updateAt: String)
 }

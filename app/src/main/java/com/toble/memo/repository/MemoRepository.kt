@@ -24,7 +24,17 @@ object MemoRepository {
             try {
                 memoDB.memoDao().insert(memoEntity)
             } catch (e: Exception) {
-                Log.e(MainActivity.TAG, "Error inserting region: ${e.message}")
+                Log.e(MainActivity.TAG, "Error inserting memo: ${e.message}")
+            }
+        }
+    }
+
+    fun updateEdit(id: Long, content: String, updateAt: String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                memoDB.memoDao().updateEdit(id, content, updateAt)
+            } catch (e: Exception) {
+                Log.e(MainActivity.TAG, "Error updating memo: ${e.message}")
             }
         }
     }
@@ -33,10 +43,10 @@ object MemoRepository {
         return withContext(Dispatchers.IO) {
             val memoList = memoDB.memoDao().getAll()
             if (memoList.isEmpty()) {
-                Log.d(MainActivity.TAG, "getAllRegion: RoomDB에 저장된 주소가 없습니다.")
+                Log.d(MainActivity.TAG, "DB에 저장된 메모가 없습니다.")
             } else {
                 for (i in memoList) {
-                    Log.d(MainActivity.TAG, "getAllRegion: ${i.content}")
+                    Log.d(MainActivity.TAG, "getAllMemo: ${i.content}")
                 }
             }
             memoList
