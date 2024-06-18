@@ -43,10 +43,15 @@ class MainActivity : AppCompatActivity(), MemoItemClickListener {
                 result.data?.getStringExtra("content")?.let {
                     Log.i(TAG, "RESULT_OK : $it")
                     val today = FormatDate.todayFormatDate()
-                    val memoEntity = MemoEntity(null, it, today, today)
+                    val itemCount = memoAdapter.itemCount
+                    val memoEntity = MemoEntity(null, it, itemCount, today, today)
 
-                    MemoRepository.insert(memoEntity)
-                    memoAdapter.add(memoEntity)
+                    lifecycleScope.launch {
+                        MemoRepository.insert(memoEntity).let { latestMemoEntity ->
+                            Log.d(TAG, "latestMemoEntity: $latestMemoEntity")
+                            memoAdapter.add(latestMemoEntity)
+                        }
+                    }
                 }
             }
         }
@@ -61,13 +66,12 @@ class MainActivity : AppCompatActivity(), MemoItemClickListener {
                     @Suppress("DEPRECATION") // 사용되지 않는 정보
                     result.data?.getParcelableExtra("memoData") as? MemoData
                 }?.let { memoData ->
-                    Log.i(TAG, "RESULT_CANCEL???")
-                        Log.d(TAG, "memoData: $memoData")
-                        val today = FormatDate.todayFormatDate()
-                        val memoEntity = MemoEntity(memoData.id, memoData.content, memoData.createdAt, today)
+                    Log.d(TAG, "memoData: $memoData")
+                    val today = FormatDate.todayFormatDate()
+                    val memoEntity = MemoEntity(memoData.id, memoData.content, memoData.position, memoData.createdAt, today)
 
-                        MemoRepository.updateEdit(memoData.id!!, memoData.content, today)
-                        memoAdapter.edit(memoData.position, memoEntity)
+                    MemoRepository.updateEdit(memoData.id!!, memoData.content, today)
+                    memoAdapter.edit(memoData.position, memoEntity)
                 } ?: Log.i(TAG, "RESULT_CANCEL!!")
 
 

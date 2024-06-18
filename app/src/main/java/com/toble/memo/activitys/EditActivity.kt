@@ -47,6 +47,7 @@ class EditActivity : AppCompatActivity() {
             @Suppress("DEPRECATION") // 사용되지 않는 정보
             intent.getParcelableExtra("memoData") as? MemoData
         }?.let { memoData ->
+            Log.d(TAG, "memoData: $memoData")
             this.memoData = memoData
 
             if (memoData.memoState == "ADD") {

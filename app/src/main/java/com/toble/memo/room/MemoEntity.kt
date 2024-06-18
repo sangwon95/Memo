@@ -14,7 +14,10 @@ data class MemoEntity(
 
     var content: String,
 
+    var position: Int,
+
     val createdAt: String,
 
     var updateAt: String,
+
 ): Parcelable

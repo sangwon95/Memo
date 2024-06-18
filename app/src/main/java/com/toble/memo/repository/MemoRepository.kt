@@ -19,14 +19,20 @@ object MemoRepository {
         memoDB = database
     }
 
-    fun insert(memoEntity: MemoEntity) {
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                memoDB.memoDao().insert(memoEntity)
-            } catch (e: Exception) {
-                Log.e(MainActivity.TAG, "Error inserting memo: ${e.message}")
-            }
+    suspend fun insert(memoEntity: MemoEntity): MemoEntity {
+        return withContext(Dispatchers.IO) {
+            val id = memoDB.memoDao().insert(memoEntity)
+            memoDB.memoDao().getMemoById(id)
         }
+
+//        CoroutineScope(Dispatchers.IO).launch {
+//            try {
+//                 val id = memoDB.memoDao().insert(memoEntity)
+//
+//            } catch (e: Exception) {
+//                Log.e(MainActivity.TAG, "Error inserting memo: ${e.message}")
+//            }
+//        }
     }
 
     fun updateEdit(id: Long, content: String, updateAt: String) {
@@ -34,7 +40,16 @@ object MemoRepository {
             try {
                 memoDB.memoDao().updateEdit(id, content, updateAt)
             } catch (e: Exception) {
-                Log.e(MainActivity.TAG, "Error updating memo: ${e.message}")
+                Log.e(MainActivity.TAG, "Error updateEdit: ${e.message}")
+            }
+        }
+    }
+    fun updatePosition(id: Long, position: Int) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                memoDB.memoDao().updatePosition(id, position)
+            } catch (e: Exception) {
+                Log.e(MainActivity.TAG, "Error updatePosition: ${e.message}")
             }
         }
     }
@@ -46,10 +61,26 @@ object MemoRepository {
                 Log.d(MainActivity.TAG, "DB에 저장된 메모가 없습니다.")
             } else {
                 for (i in memoList) {
-                    Log.d(MainActivity.TAG, "getAllMemo: ${i.content}")
+                    Log.d(MainActivity.TAG, "getAllMemo: $i")
                 }
             }
             memoList
+        }
+    }
+
+//    suspend fun getLatestMemo(): MemoEntity {
+//        return withContext(Dispatchers.IO) {
+//            val memoEntity = memoDB.memoDao().getLatestMemo()
+//            memoEntity
+//        }
+//    }
+    fun delete(id: Long) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                memoDB.memoDao().delete(id)
+            } catch (e: Exception) {
+                Log.e(MainActivity.TAG, "Error delete memo: ${e.message}")
+            }
         }
     }
 }

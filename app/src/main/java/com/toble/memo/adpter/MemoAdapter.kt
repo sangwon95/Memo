@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.toble.memo.databinding.MemoListItemBinding
 import com.toble.memo.model.MemoItemClickListener
+import com.toble.memo.repository.MemoRepository
 import com.toble.memo.room.MemoEntity
 
 
@@ -32,19 +33,31 @@ class MemoAdapter(
     }
 
     fun removeDataAt(pos: Int) {
+        val id = memoList[pos].id!!
         memoList.removeAt(pos)
+        MemoRepository.delete(id)
+
         notifyItemRemoved(pos)
+
+
     }
 
     fun moveItem(fromPosition: Int, toPosition: Int) {
         val movedItem = memoList.removeAt(fromPosition)
         memoList.add(toPosition, movedItem)
+        notifyItemMoved(fromPosition, toPosition)
+
+        Log.d("로그", "===================")
+        for(i: Int in 0 until memoList.size) {
+            MemoRepository.updatePosition(memoList[i].id!!, i)
+            Log.d("로그", "moveItems: $i")
+            Log.d("로그", "memoList: ${memoList[i]}")
+        }
+        Log.d("로그", "===================")
         for(i in memoList){
-            Log.d("로그", "moveItem: ${i.content}")
+            Log.d("로그", "memoList: $i")
         }
     }
-
-
 
     fun add(memoEntity: MemoEntity) {
         memoList.add(memoEntity)
