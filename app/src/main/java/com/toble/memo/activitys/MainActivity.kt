@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity(), MemoItemClickListener {
 
     private lateinit var memoDB: MemoDatabase //Room Database
 
-    private var memoList = mutableListOf<MemoEntity>()
+   // private var memoList = mutableListOf<MemoEntity>()
 
     // 메모 추가 화면 호출
     private val addLauncher =
@@ -117,8 +117,8 @@ class MainActivity : AppCompatActivity(), MemoItemClickListener {
         // Room DB에 저장된 모든 메모 가져오기
         lifecycleScope.launch {
             MemoRepository.getAll().let {
-                memoList.addAll(it)
-                initMemoAdapter(memoList)
+//                memoList.addAll(it)
+                initMemoAdapter(it)
             }
         }
     }
@@ -138,18 +138,17 @@ class MainActivity : AppCompatActivity(), MemoItemClickListener {
         touchHelper.attachToRecyclerView(binding.memoRecyclerView)
     }
     
-    override fun memoItemClickEvent(content: String, position: Int) {
+    override fun memoItemClickEvent(memo: MemoEntity) {
         Intent(this, EditActivity::class.java).apply {
-            Log.d(TAG, "memoItemClickEvent: ${memoList[position]}")
-            Log.d(TAG, "memoItemClickEvent: ${memoList[position].id}")
+            Log.d(TAG, "memoItemClickEvent: $memo")
 
             val memoData = MemoData(
-                memoList[position].id,
+                memo.id,
                 "EDIT",
-                position,
-                content,
-                memoList[position].createdAt,
-                memoList[position].updateAt
+                memo.position,
+                memo.content,
+                memo.createdAt,
+                memo.updateAt
             )
 
             this.putExtra("memoData", memoData)

@@ -50,13 +50,12 @@ class MemoAdapter(
         Log.d("로그", "===================")
         for(i: Int in 0 until memoList.size) {
             MemoRepository.updatePosition(memoList[i].id!!, i)
+            memoList[i].position = i
+
             Log.d("로그", "moveItems: $i")
             Log.d("로그", "memoList: ${memoList[i]}")
         }
         Log.d("로그", "===================")
-        for(i in memoList){
-            Log.d("로그", "memoList: $i")
-        }
     }
 
     fun add(memoEntity: MemoEntity) {
@@ -73,7 +72,7 @@ class MemoAdapter(
         fun bind(memo: MemoEntity, position: Int){
             binding.titleTextView.text = memo.content
             binding.memoItemRootLayout.setOnClickListener{
-                memoItemClickListener.memoItemClickEvent(memo.content, position)
+                memoItemClickListener.memoItemClickEvent(memo)
             }
 
         }
