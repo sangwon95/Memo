@@ -11,7 +11,7 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/darkBlack"
+        android:background="@color/colorBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="메모작성"
-            android:textColor="@color/white"
+            android:textColor="@color/colorTextPrimary"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -46,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="추가"
-            android:textColor="@color/white"
+            android:textColor="@color/colorTextPrimary"
             android:textSize="15sp"
             android:padding="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -61,7 +61,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/darkBlack"
+        android:background="@color/colorBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -73,9 +73,11 @@
             android:layout_height="wrap_content"
             android:focusableInTouchMode="true"
             android:focusable="true"
-            android:textColor="@color/white"
+            android:textColor="@color/colorTextPrimary"
             android:inputType="textMultiLine"
-            android:background="@android:color/transparent">
+            android:background="@android:color/transparent"
+            style="@style/CustomTextInputEditText"
+            >
         </com.google.android.material.textfield.TextInputEditText>
     </com.google.android.material.textfield.TextInputLayout>
 

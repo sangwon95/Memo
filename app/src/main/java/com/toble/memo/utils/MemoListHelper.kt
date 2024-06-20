@@ -3,11 +3,9 @@ package com.toble.memo.utils
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import android.util.Log
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.toble.memo.activitys.MainActivity
-import com.toble.memo.adpter.MemoAdapter
+import com.toble.memo.adapter.MemoAdapter
 
 class MemoListHelper(
     private var memoAdapter: MemoAdapter,

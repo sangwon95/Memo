@@ -1,4 +1,4 @@
-package com.toble.memo.adpter
+package com.toble.memo.adapter
 
 import android.content.Context
 import android.util.Log

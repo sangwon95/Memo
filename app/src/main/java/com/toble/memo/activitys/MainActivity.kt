@@ -6,10 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
-import com.toble.memo.adpter.MemoAdapter
+import com.toble.memo.R
+import com.toble.memo.adapter.MemoAdapter
+import com.toble.memo.adapter.ViewPagerAdapter
 import com.toble.memo.databinding.ActivityMainBinding
 import com.toble.memo.model.MemoData
 import com.toble.memo.model.MemoItemClickListener
@@ -18,8 +21,6 @@ import com.toble.memo.room.MemoDatabase
 import com.toble.memo.room.MemoEntity
 import com.toble.memo.utils.FormatDate
 import com.toble.memo.utils.MemoListHelper
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity(), MemoItemClickListener {
@@ -90,12 +91,19 @@ class MainActivity : AppCompatActivity(), MemoItemClickListener {
             }
         }
 
+        private fun initViewPager() {
+        val viewPager = binding.viewPager
+        val viewPagerAdapter = ViewPagerAdapter(this)
+        viewPager.adapter = viewPagerAdapter
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater).apply {
             setContentView(this.root)
         }
         initMemoDataBase()
+        initViewPager()
     }
 
     override fun onResume() {
@@ -127,7 +135,9 @@ class MainActivity : AppCompatActivity(), MemoItemClickListener {
         memoAdapter = MemoAdapter(memoList, this)
         binding.memoRecyclerView.adapter = memoAdapter
 
+        val dividerDrawable = ContextCompat.getDrawable(this, R.drawable.divider_drawable)
         val dividerItemDecoration = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
+        dividerItemDecoration.setDrawable(dividerDrawable!!)
         binding.memoRecyclerView.addItemDecoration(dividerItemDecoration)
 
         val callback = MemoListHelper(memoAdapter) { removePosition ->

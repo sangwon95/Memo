@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#131313</color>
+    <color name="darkBlack">#131313</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="colorPrimary">#EAEAEA</color>
+    <color name="colorBackground">#131313</color>
+    <color name="colorPrimaryDark">#050505</color>
+    <color name="colorTextPrimary">#EAEAEA</color>
+    <color name="colorIcon">#EAEAEA</color>
+
+    <color name="colorDivider">#ADADAD</color>
+    <color name="colorCursor">#EAEAEA</color>
+
+</resources>

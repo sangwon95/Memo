@@ -13,10 +13,14 @@
         android:theme="@style/Theme.Memo"
         tools:targetApi="31">
         <activity
+            android:name=".activitys.OnboardingActivity"
+            android:exported="true" >
+
+        </activity>
+        <activity
             android:name=".activitys.EditActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize"
-            />
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activitys.MainActivity"
             android:exported="true">
