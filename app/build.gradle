@@ -41,8 +41,9 @@ android {
 
 
 dependencies {
-    //    implementation 'com.romandanylyk:pageindicatorview:1.0.3'
+    // custom bottom indicator
     implementation "com.tbuonomo:dotsindicator:5.0"
+
     // room database
     def room_version = "2.5.0"
     implementation "androidx.room:room-runtime:$room_version"

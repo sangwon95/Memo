@@ -32,9 +32,12 @@ class ThirdFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         val colorPrimaryDark = ContextCompat.getColor(view.context, R.color.colorPrimaryDark)
         binding.swapImageView1.setColorFilter(colorPrimaryDark)
         binding.swapImageView2.setColorFilter(colorPrimaryDark)
+
+        binding.nextButton.text = "종료"
     }
 
 }

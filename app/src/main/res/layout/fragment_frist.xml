@@ -47,21 +47,21 @@
         app:layout_constraintVertical_bias="0.104"
         />
 
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="메모를 추가 할수 있어요"
+        android:text="메모를 추가 할 수 있어요!!"
         android:textColor="@color/white"
         android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.605"
+        app:layout_constraintHorizontal_bias="0.815"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
         app:layout_constraintVertical_bias="0.0" />
-
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/next_button"

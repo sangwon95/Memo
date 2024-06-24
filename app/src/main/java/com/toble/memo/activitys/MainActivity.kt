@@ -77,29 +77,16 @@ class MainActivity : AppCompatActivity(), MemoItemClickListener {
                     MemoRepository.updateEdit(memoData.id!!, memoData.content, today)
                     memoAdapter.edit(memoData.position, memoEntity)
                 } ?: Log.i(TAG, "RESULT_CANCEL!!")
-
-
-//                result.data?.getStringExtra("content")?.let {
-//                    Log.i(TAG, "RESULT_OK : $it")
-//                    result.data?.getIntExtra("position", -1)?.let { position ->
-//                        val today = FormatDate.todayFormatDate()
-//                        val memoEntity = MemoEntity(null, it, today, today)
-//
-//                        MemoRepository.updateEdit(memoEntity)
-//                        memoAdapter.edit(position, MemoEntity(null, it, "2024-06-05", today))
-//                    }
-//                }
             } else {
                 Log.i(TAG, "RESULT_CANCEL")
             }
         }
-    private val timer = Timer()
+
     private fun initViewPager() {
         val viewPager = binding.viewPager
         val viewPagerAdapter = ViewPagerAdapter(this)
         viewPager.adapter = viewPagerAdapter
 
-        //TabLayoutMediator(binding.tlMain, binding.viewPager) { _, _ -> }.attach()
         binding.springDotsIndicator.attachTo(viewPager)
     }
 
