@@ -64,4 +64,38 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
+    <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+        android:id="@+id/spring_dots_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:dampingRatio="0.5"
+        app:dotsColor="@color/white"
+        app:dotsCornerRadius="5dp"
+        app:dotsSize="16dp"
+        app:dotsSpacing="10dp"
+        app:dotsStrokeColor="@color/gray"
+        app:dotsStrokeWidth="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:stiffness="300" />
+
+<!--    <com.google.android.material.tabs.TabLayout-->
+<!--        android:id="@+id/tl_main"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginBottom="16dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        android:background="@android:color/transparent"-->
+<!--        app:tabBackground="@drawable/tab_layout_indicator"-->
+<!--        app:tabGravity="center"-->
+<!--        app:tabIndicatorHeight="0dp"-->
+<!--        app:tabMaxWidth="100dp"-->
+<!--        app:tabPadding="0dp"-->
+<!--        app:tabMode="scrollable" />-->
+
 </androidx.constraintlayout.widget.ConstraintLayout>

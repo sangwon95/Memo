@@ -2,14 +2,15 @@ package com.toble.memo.activitys
 
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
+import com.google.android.material.tabs.TabLayoutMediator
 import com.toble.memo.R
 import com.toble.memo.adapter.MemoAdapter
 import com.toble.memo.adapter.ViewPagerAdapter
@@ -22,6 +23,8 @@ import com.toble.memo.room.MemoEntity
 import com.toble.memo.utils.FormatDate
 import com.toble.memo.utils.MemoListHelper
 import kotlinx.coroutines.launch
+import java.util.Timer
+
 
 class MainActivity : AppCompatActivity(), MemoItemClickListener {
 
@@ -90,12 +93,16 @@ class MainActivity : AppCompatActivity(), MemoItemClickListener {
                 Log.i(TAG, "RESULT_CANCEL")
             }
         }
-
-        private fun initViewPager() {
+    private val timer = Timer()
+    private fun initViewPager() {
         val viewPager = binding.viewPager
         val viewPagerAdapter = ViewPagerAdapter(this)
         viewPager.adapter = viewPagerAdapter
+
+        //TabLayoutMediator(binding.tlMain, binding.viewPager) { _, _ -> }.attach()
+        binding.springDotsIndicator.attachTo(viewPager)
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

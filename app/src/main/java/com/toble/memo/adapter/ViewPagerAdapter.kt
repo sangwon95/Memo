@@ -5,11 +5,12 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.toble.memo.fragment.FirstFragment
 import com.toble.memo.fragment.SecondFragment
+import com.toble.memo.fragment.ThirdFragment
 
 class ViewPagerAdapter(fragmentActivity: FragmentActivity) :
     FragmentStateAdapter(fragmentActivity) {
     private lateinit var viewPagerAdapter: ViewPagerAdapter
-    private val fragments = listOf(FirstFragment(), SecondFragment())
+    private val fragments = listOf(FirstFragment(), SecondFragment(), ThirdFragment())
 
     override fun getItemCount(): Int {
         return fragments.size
