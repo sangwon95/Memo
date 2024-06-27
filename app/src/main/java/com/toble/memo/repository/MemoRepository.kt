@@ -1,7 +1,7 @@
 package com.toble.memo.repository
 
 import android.util.Log
-import com.toble.memo.activitys.MainActivity
+import com.toble.memo.activity.MainActivity
 import com.toble.memo.room.MemoDatabase
 import com.toble.memo.room.MemoEntity
 import kotlinx.coroutines.CoroutineScope

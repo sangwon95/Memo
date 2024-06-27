@@ -5,11 +5,16 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="android:textColorPrimary">@color/colorTextPrimary</item>
         <item name="android:iconTint">@color/colorIcon</item>
+        <item name="android:windowBackground">@color/white</item>
     </style>
-
 
     <style name="CustomTextInputEditText" parent="Widget.MaterialComponents.TextInputEditText.FilledBox">
         <item name="android:colorControlActivated">@color/colorCursor</item>
     </style>
 
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/black</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/app_icon</item>
+        <item name="postSplashScreenTheme">@style/Theme.Memo</item>
+    </style>
 </resources>

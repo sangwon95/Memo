@@ -1,4 +1,4 @@
-package com.toble.memo.activitys
+package com.toble.memo.activity
 
 import android.content.Context
 import android.content.Intent
@@ -8,10 +8,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import androidx.annotation.RequiresApi
 import com.toble.memo.databinding.ActivityEditBinding
 import com.toble.memo.model.MemoData
-import com.toble.memo.room.MemoEntity
 import com.toble.memo.utils.KeyboardUtil
 
 

@@ -1,9 +1,7 @@
-package com.toble.memo.activitys
+package com.toble.memo.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.toble.memo.R
-import com.toble.memo.adapter.ViewPagerAdapter
 import com.toble.memo.databinding.ActivityOnboardingBinding
 
 class OnboardingActivity : AppCompatActivity() {

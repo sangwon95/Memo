@@ -24,7 +24,7 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val colorPrimaryDark = ContextCompat.getColor(requireContext(), R.color.colorPrimaryDark)
-        binding.addImageView.setColorFilter(colorPrimaryDark)
+        val darkBlack = ContextCompat.getColor(requireContext(), R.color.darkBlack)
+        binding.addImageView.setColorFilter(darkBlack)
     }
 }

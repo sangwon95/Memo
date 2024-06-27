@@ -12,4 +12,9 @@
         <item name="android:colorControlActivated">@color/colorCursor</item>
     </style>
 
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/white</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/app_icon</item>
+        <item name="postSplashScreenTheme">@style/Theme.Memo</item>
+    </style>
 </resources>
