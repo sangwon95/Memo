@@ -43,7 +43,6 @@ android {
 dependencies {
     // splash screen
     implementation "androidx.core:core-splashscreen:1.0.0"
-    implementation 'androidx.core:core-splashscreen:1.0.0-beta02'
     // custom bottom indicator
     implementation "com.tbuonomo:dotsindicator:5.0"
     implementation 'androidx.preference:preference-ktx:1.2.1'
