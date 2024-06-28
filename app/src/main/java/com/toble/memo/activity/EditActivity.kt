@@ -75,6 +75,7 @@ class EditActivity : AppCompatActivity() {
         // 키보드 숨기기
         binding.rootLayout.setOnClickListener {
             hideKeyboard()
+            binding.memoEditText.clearFocus() // 포커스 제거
         }
     }
 
@@ -122,6 +123,8 @@ class EditActivity : AppCompatActivity() {
      * 키보드 숨기기
      */
     private fun hideKeyboard() {
+
+
         val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         currentFocus?.let {
             inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
